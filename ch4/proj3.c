@@ -6,11 +6,11 @@
 
 int sum; // this data is shared by the thread(s)
 void *runner(void *param); //threads call this function
-int original_list[] = {7,12,19,3,18,4,2,6,15 8};  //Assume there are even numbers
+int original_list[] = {7,12,19,3,18,4,2,6,15,8};  //Assume there are even numbers
 
 int *listncopy(int *dst, int *src, int n)
 {
-	for(i = 0; i < n; i++)
+	for(int i = 0; i < n; i++)
 	{
 		dst[i] = src[i];
 	}
@@ -39,11 +39,10 @@ int main(int argc, char *argv[])
 //the thread will execute in this function
 void *runner(void *param)
 {
-	int i;
 	int upper = atoi(param);
 	sum = 0;
 
-	for (i = 1; i <= upper; i++)
+	for (int i = 1; i <= upper; i++)
 	{
 		sum += i;
 	}
