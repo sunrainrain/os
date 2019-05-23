@@ -5,8 +5,8 @@
 #define usec_elapsed(s,e)  (1000000 * ((e).tv_sec-(s).tv_sec) + ((e).tv_usec - (s).tv_usec)) 
 
 int sum; // this data is shared by the thread(s)
-void *runner(void *param) //threads call this function
-int original_list[] = {7, 12, 19, 3, 18, 4, 2, 6, 15, 8};  //Assume there are even numbers
+void *runner(void *param); //threads call this function
+int original_list[] = {7,12,19,3,18,4,2,6,15 8};  //Assume there are even numbers
 
 int *listncopy(int *dst, int *src, int n)
 {
@@ -46,6 +46,6 @@ void *runner(void *param)
 	for (i = 1; i <= upper; i++)
 	{
 		sum += i;
-		pthread exit(0);
 	}
+	pthread_exit(0);
 }
