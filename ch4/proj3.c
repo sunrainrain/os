@@ -1,12 +1,21 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h >
+//#include <sys/time,h>
 #define N_LIST   (sizeof(original_list)/sizeof(int))
 #define usec_elapsed(s,e)  (1000000 * ((e).tv_sec-(s).tv_sec) + ((e).tv_usec - (s).tv_usec)) 
 
 int sum; // this data is shared by the thread(s)
 void *runner(void *param); //threads call this function
 int original_list[] = {7,12,19,3,18,4,2,6,15,8};  //Assume there are even numbers
+
+struct timeval{
+	long tv_sec;
+	long tv_usec;
+};
+
+struct timeval start, end;
+unsigned long usec;
 
 int *listncopy(int *dst, int *src, int n)
 {
@@ -17,9 +26,26 @@ int *listncopy(int *dst, int *src, int n)
 	return dst;
 }
 
+void do_sort(char *id, int *first, int n)
+{
+	print_list(id, "Sub-Old", first, n);
+	gettimeofday(&start, NULL);
+	
+	//do sorting
+
+	gettimeofday(&end, NULL);
+	print_list(id, "Sub-New", first, n);
+	
+	printf("%s spent %ld usec\n", id, usec_elapsed(start, end));
+	return usec_elapsed(start, end);
+}
+
+
 int main(int argc, char *argv[])
 {	
-	int mylist[N_LIST]; 
+	int mylist[N_LIST];
+ 
+	listncopy(mylist, original_list, N_LIST);
 
 	pthread_t tid; //the thread identifier
 	pthread_attr_t attr; // set of thread attributes
